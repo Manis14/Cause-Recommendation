@@ -9,14 +9,13 @@ A Flask-based web application that allows users to input symptoms and receive a 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Routes](#routes)
-- [License](#license)
 
 ## Introduction
 This web application uses a predefined set of symptoms and predicts the disease based on user input. After the prediction, it provides relevant information regarding the disease such as its definition, recommended workout routines, dietary plans, precautionary measures, and medications.
 
 ## Features
 - **Symptom Selection:** Users can select multiple symptoms to predict the possible disease.
-- **Disease Prediction:** Based on the symptoms, the application predicts the disease.
+- **Disease Prediction:** The application predicts the disease based on the symptoms.
 - **Disease Information:** Provides detailed information about the predicted disease.
 - **User Registration/Login:** Handles user registration and login functionality.
 
@@ -63,8 +62,6 @@ This web application uses a predefined set of symptoms and predicts the disease 
 - `/process-symptoms`: Processes the symptoms selected and returns the predicted disease.
 - `/disease-details`: Provides detailed information on the predicted disease.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ---
 

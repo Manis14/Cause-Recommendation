@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCTOR AI - Symptoms Selection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .navbar .logo span {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .nav-links li {
+            display: inline;
+        }
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #f9f9f9;
+        }
+
+        /* Container styles */
+        .container {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Multi-select styles */
+        #symptoms-container {
+            margin-top: 10px;
+        }
+
+        .multi-select-tag {
+            width: 100%;
+        }
+
+        /* Button styles */
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer styles */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="DOCTOR AI Logo">
+            <span>DOCTOR AI</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/registration">Registration</a></li>
+            <li><a href="/feedback">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2>Select Symptoms</h2>
+        <form action="/process-symptoms" method="POST">
+            <label for="symptoms">Search Symptoms:</label>
+            <select name="symptoms" id="symptoms" multiple>
+                {% for symptom in Symptoms_names %}
+                <option value="{{ symptom }}">{{ symptom }}</option>
+                {% endfor %}
+            </select>
+            <div id="symptoms-container"></div>
+            <button type="submit" name="action" value="submit_symptoms">Submit Symptoms</button>
+        </form>
+        <div style="text-align: center; margin-top: 20px;">
+        {% if warning_message %}
+            <p>Please select symptoms to proceed.</p>
+        {% else %}
+            {% if prediction %}
+            <p>Diseases related to symptoms such as <b>{{ selected_symptoms }}</b></p>
+            <p style="font-size: 24px; font-weight: bold; color: #333;">{{ prediction.title() }}</p>
+
+             <form action="/disease-details" method="GET" style="margin-top: 20px;">
+                <button type="submit" name="disease" value="{{ prediction }}" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    {{ prediction.title() }} Info
+                </button>
+            </form>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+
+    <footer>
+        © 2025 DOCTOR AI - All Rights Reserved
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
+    <script>
+        new MultiSelectTag('symptoms', {
+            rounded: true,
+            shadow: true,
+            placeholder: 'Search Symptoms...',
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+        });
+    </script>
+</body>
+</html>
